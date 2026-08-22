@@ -1,0 +1,329 @@
+Q1. Student Result Management System
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Student {
+    int roll, marks[5];
+    float per;
+    static int count;
+public:
+    void input() {
+        cin >> roll;
+        for(int i = 0; i < 5; i++)
+            cin >> marks[i];
+        count++;
+    }
+    void calculate() {
+        int total = 0;
+        for(int i = 0; i < 5; i++)
+            total += marks[i];
+        per = total / 5.0;
+    }
+    void display() {
+        char grade;
+        if(per >= 90) grade = 'A';
+        else if(per >= 75) grade = 'B';
+        else if(per >= 60) grade = 'C';
+        else if(per >= 50) grade = 'D';
+        else grade = 'F';
+        cout << "Roll = " << roll << "\n";
+        cout << "Percentage = " << per << "\n";
+        cout << "Grade = " << grade << "\n";
+        cout << "Total Students = " << count;
+    }
+};
+int Student::count = 0;
+int main() {
+    Student s;
+    s.input();
+    s.calculate();
+    s.display();
+}
+```
+
+Q2. Department Salary Comparison using Friend Function
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class B;
+class A {
+    float salA;
+public:
+    void input() {
+        cin >> salA;
+    }
+    friend void compare(A, B);
+};
+class B {
+    float salB;
+public:
+    void input() {
+        cin >> salB;
+    }
+    friend void compare(A, B);
+};
+void compare(A a, B b) {
+    if(a.salA > b.salB)
+        cout << "Department A has higher salary";
+    else if(b.salB > a.salA)
+        cout << "Department B has higher salary";
+    else
+        cout << "Both salaries are equal";
+}
+int main() {
+    A a;
+    B b;
+    a.input();
+    b.input();
+    compare(a, b);
+}
+```
+
+Q3. Cricket Team Statistics
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Player {
+    string name;
+    int matches, runs;
+    float strike;
+public:
+    void input() {
+        cin >> name >> matches >> runs >> strike;
+    }
+    void performance() {
+        if(runs >= 500 && strike >= 100) {
+            cout << "Player qualifies\n";
+            cout << name << " " << matches << " " << runs << " " << strike;
+        }
+        else
+            cout << "Player does not qualify";
+    }
+};
+int main() {
+    Player p;
+    p.input();
+    p.performance();
+}
+```
+
+Q4. Digital Wallet using Static Member
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Wallet {
+    int id, balance;
+    static int nextID;
+public:
+    Wallet() {
+        id = nextID++;
+        balance = 0;
+    }
+    void addMoney(int x) {
+        balance += x;
+    }
+    void transfer(int x) {
+        if(x <= balance)
+            balance -= x;
+        else
+            cout << "Insufficient balance";
+    }
+    void bill(int x) {
+        if(x <= balance)
+            balance -= x;
+        else
+            cout << "Insufficient balance";
+    }
+    void display() {
+        cout << "Wallet ID = " << id << "\n";
+        cout << "Balance = " << balance;
+    }
+};
+int Wallet::nextID = 1001;
+int main() {
+    Wallet w;
+    w.addMoney(5000);
+    w.transfer(1000);
+    w.bill(500);
+    w.display();
+}
+```
+
+Q5. Bank Account Management System
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Bank {
+    float balance;
+public:
+    Bank() {
+        balance = 0;
+    }
+    void deposit(float x) {
+        balance += x;
+    }
+    void withdraw(float x) {
+        if(x <= balance)
+            balance -= x;
+        else
+            cout << "Insufficient balance\n";
+    }
+    void display() {
+        cout << "Balance = " << balance;
+    }
+};
+int main() {
+    Bank b;
+    b.deposit(5000);
+    b.withdraw(1500);
+    b.display();
+}
+```
+
+Q6. Default, Parameterized and Copy Constructor
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Employee {
+    int id;
+public:
+    Employee() {
+        id = 0;
+        cout << "Default\n";
+    }
+    Employee(int x) {
+        id = x;
+        cout << "Parameterized\n";
+    }
+    Employee(Employee &e) {
+        id = e.id;
+        cout << "Copy\n";
+    }
+    void display() {
+        cout << "ID = " << id << "\n";
+    }
+};
+int main() {
+    Employee e1;
+    Employee e2(101);
+    Employee e3(e2);
+    e1.display();
+    e2.display();
+    e3.display();
+}
+```
+
+Q7. Structure and Enumeration
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+enum Dept { IT, HR, SALES };
+struct Employee {
+    int id;
+    string name;
+    Dept dept;
+};
+int main() {
+    Employee e;
+    e.id = 101;
+    e.name = "Atharva";
+    e.dept = IT;
+    cout << e.id << "\n";
+    cout << e.name << "\n";
+    if(e.dept == IT)
+        cout << "IT Department";
+    else if(e.dept == HR)
+        cout << "HR Department";
+    else
+        cout << "Sales Department";
+}
+```
+
+Q8. Auto Keyword
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+int main() {
+    auto a = 10;
+    auto b = 10.5;
+    auto c = 'A';
+    cout << a << "\n";
+    cout << b << "\n";
+    cout << c << "\n";
+}
+```
+
+Q9. Employee Payroll System
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Employee {
+    float basic, gross, net;
+public:
+    Employee(float b) {
+        basic = b;
+    }
+    void calculate() {
+        float hra = 0.20 * basic;
+        float da = 0.10 * basic;
+        gross = basic + hra + da;
+        net = gross - 0.05 * gross;
+    }
+    void display() {
+        cout << "Gross Salary = " << gross << "\n";
+        cout << "Net Salary = " << net;
+    }
+};
+int main() {
+    Employee e(30000);
+    e.calculate();
+    e.display();
+}
+```
+
+Q10. Array of Objects - Book Management
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Book {
+    string name;
+    float price;
+public:
+    void input() {
+        cin >> name >> price;
+    }
+    void display(float low, float high) {
+        if(price >= low && price <= high)
+            cout << name << " " << price << "\n";
+    }
+};
+int main() {
+    Book b[5];
+    for(int i = 0; i < 5; i++)
+        b[i].input();
+    float low, high;
+    cin >> low >> high;
+    for(int i = 0; i < 5; i++)
+        b[i].display(low, high);
+}
+```

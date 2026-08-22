@@ -1,0 +1,1364 @@
+Yes. Below is the **exact Unit 1, Unit 2 and Unit 3 content that appears before the “OOP Last year” section** in your Word file. I’m keeping the original question wording and the original code structure rather than simplifying or correcting it. 
+
+# UNIT 1
+
+Q1. Design a student result management system store roll no ,name, marks of 5 subject percentage and grade , calculate percentage and grade using member function and maintain the total no of using static data member
+
+Code:
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+class Student
+{
+private:
+ int rollNo;
+ string name;
+ int marks[5];
+ float percentage;
+ char grade;
+ static int totalStudents;
+public:
+ void input()
+ {
+ cout << "\nEnter Roll No: ";
+ cin >> rollNo;
+ cout << "Enter Name: ";
+ cin >> name;
+ cout << "Enter marks of 5 subjects:\n";
+ for(int i = 0; i < 5; i++)
+ {
+ cout << "Subject " << i + 1 << ": ";
+ cin >> marks[i];
+ }
+ totalStudents++;
+ }
+ void calculatePercentage()
+ {
+ int total = 0;
+ for(int i = 0; i < 5; i++)
+ {
+ total = total + marks[i];
+ }
+ percentage = total / 5.0;
+ }
+ void calculateGrade()
+ {
+ if(percentage >= 90)
+ grade = 'A';
+ else if(percentage >= 75)
+ grade = 'B';
+ else if(percentage >= 60)
+ grade = 'C';
+ else if(percentage >= 50)
+ grade = 'D';
+ else
+ grade = 'F';
+ }
+ void display()
+ {
+ cout << "\n----- STUDENT RESULT -----\n";
+ cout << "Roll No : " << rollNo << endl;
+ cout << "Name : " << name << endl;
+ cout << "Percentage : " << percentage << "%" << endl;
+ cout << "Grade : " << grade << endl;
+ }
+ static void showTotalStudents()
+ {
+ cout << "\nTotal Students: " << totalStudents << endl;
+ }
+};
+int Student::totalStudents = 0;
+int main()
+{
+ Student s;
+ int choice;
+ do
+ {
+ cout << "\n===== STUDENT RESULT MANAGEMENT =====\n";
+ cout << "1. Enter Student Details\n";
+ cout << "2. Calculate Percentage\n";
+ cout << "3. Calculate Grade\n";
+ cout << "4. Display Result\n";
+ cout << "5. Display Total Students\n";
+ cout << "6. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ s.input();
+ break;
+ case 2:
+ s.calculatePercentage();
+ cout << "Percentage calculated successfully.\n";
+ break;
+ case 3:
+ s.calculateGrade();
+ cout << "Grade calculated successfully.\n";
+ break;
+ case 4:
+ s.display();
+ break;
+ case 5:
+ Student::showTotalStudents();
+ break;
+ case 6:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 6);
+ return 0;
+}
+```
+
+Q2. Create two classes representing department A and department B each storing private employee salary info use a friend a function to compare and display the highest salary
+
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class DepartmentB; // Forward declaration
+class DepartmentA
+{
+private:
+ float salaryA;
+public:
+ void input()
+ {
+ cout << "Enter salary of Department A employee: ";
+ cin >> salaryA;
+ }
+ friend void compareSalary(DepartmentA, DepartmentB);
+};
+class DepartmentB
+{
+private:
+ float salaryB;
+public:
+ void input()
+ {
+ cout << "Enter salary of Department B employee: ";
+ cin >> salaryB;
+ }
+ friend void compareSalary(DepartmentA, DepartmentB);
+};
+void compareSalary(DepartmentA a, DepartmentB b)
+{
+ if(a.salaryA > b.salaryB)
+ {
+ cout << "\nDepartment A has the highest salary: "
+ << a.salaryA << endl;
+ }
+ else if(b.salaryB > a.salaryA)
+ {
+ cout << "\nDepartment B has the highest salary: "
+ << b.salaryB << endl;
+ }
+ else
+ {
+ cout << "\nBoth employees have the same salary: "
+ << a.salaryA << endl;
+ }
+}
+int main()
+{
+ DepartmentA a;
+ DepartmentB b;
+ int choice;
+ do
+ {
+ cout << "\n===== EMPLOYEE SALARY SYSTEM =====\n";
+ cout << "1. Enter Department A Salary\n";
+ cout << "2. Enter Department B Salary\n";
+ cout << "3. Compare Salaries\n";
+ cout << "4. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ a.input();
+ break;
+ case 2:
+ b.input();
+ break;
+ case 3:
+ compareSalary(a, b);
+ break;
+ case 4:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 4);
+ return 0;
+}
+```
+
+Q3. Develop a cricket team statistic system to maintain player details such as matches played run scored and strike rate display player satisfying specific performance
+
+Code:
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+class Player
+{
+private:
+ string name;
+ int matches;
+ int runs;
+ float strikeRate;
+public:
+ void input()
+ {
+ cout << "\nEnter Player Name: ";
+ cin >> name;
+ cout << "Enter Matches Played: ";
+ cin >> matches;
+ cout << "Enter Runs Scored: ";
+ cin >> runs;
+ cout << "Enter Strike Rate: ";
+ cin >> strikeRate;
+ }
+ void calculateStrikeRate()
+ {
+ // Strike rate is already entered by the user
+ cout << "Strike Rate: " << strikeRate << endl;
+ }
+ void display()
+ {
+ cout << "\n----- PLAYER DETAILS -----\n";
+ cout << "Player Name : " << name << endl;
+ cout << "Matches Played: " << matches << endl;
+ cout << "Runs Scored : " << runs << endl;
+ cout << "Strike Rate : " << strikeRate << endl;
+ }
+ void checkPerformance()
+ {
+ if(runs >= 500 && strikeRate >= 100)
+ {
+ cout << "\nPlayer satisfies the performance criteria.\n";
+ display();
+ }
+ else
+ {
+ cout << "\nPlayer does not satisfy the performance criteria.\n";
+ }
+ }
+};
+int main()
+{
+ Player p;
+ int choice;
+ do
+ {
+ cout << "\n===== CRICKET TEAM STATISTICS =====\n";
+ cout << "1. Enter Player Details\n";
+ cout << "2. Display Player Details\n";
+ cout << "3. Check Performance\n";
+ cout << "4. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ p.input();
+ break;
+ case 2:
+ p.display();
+ break;
+ case 3:
+ p.checkPerformance();
+ break;
+ case 4:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 4);
+ return 0;
+}
+```
+
+Q4. Design a digital valid application that stores wallet details, balance, reward points and transactions history. Implement operation for adding money, transferring funds and paying bills and generating unique wallet id using static member
+
+Code:
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+class Wallet
+{
+private:
+ int walletID;
+ float balance;
+ int rewardPoints;
+ string transactions[20];
+ int transactionCount;
+ static int nextWalletID;
+public:
+ Wallet()
+ {
+ walletID = nextWalletID++;
+ balance = 0;
+ rewardPoints = 0;
+ transactionCount = 0;
+ }
+ void addMoney()
+ {
+ float amount;
+ cout << "Enter amount to add: ";
+ cin >> amount;
+ if(amount > 0)
+ {
+ balance = balance + amount;
+ rewardPoints = rewardPoints + 1;
+ transactions[transactionCount] =
+ "Money Added: " + to_string(amount);
+ transactionCount++;
+ cout << "Money added successfully.\n";
+ }
+ else
+ {
+ cout << "Invalid amount.\n";
+ }
+ }
+ void transferFunds()
+ {
+ float amount;
+ cout << "Enter amount to transfer: ";
+ cin >> amount;
+ if(amount > 0 && amount <= balance)
+ {
+ balance = balance - amount;
+ transactions[transactionCount] =
+ "Funds Transferred: " + to_string(amount);
+ transactionCount++;
+ cout << "Funds transferred successfully.\n";
+ }
+ else
+ {
+ cout << "Insufficient balance or invalid amount.\n";
+ }
+ }
+ void payBill()
+ {
+ float amount;
+ cout << "Enter bill amount: ";
+ cin >> amount;
+ if(amount > 0 && amount <= balance)
+ {
+ balance = balance - amount;
+ transactions[transactionCount] =
+ "Bill Paid: " + to_string(amount);
+ transactionCount++;
+ cout << "Bill paid successfully.\n";
+ }
+ else
+ {
+ cout << "Insufficient balance or invalid amount.\n";
+ }
+ }
+ void displayWallet()
+ {
+ cout << "\n----- WALLET DETAILS -----\n";
+ cout << "Wallet ID : " << walletID << endl;
+ cout << "Balance : " << balance << endl;
+ cout << "Reward Points : " << rewardPoints << endl;
+ }
+ void displayTransactions()
+ {
+ cout << "\n----- TRANSACTION HISTORY -----\n";
+ if(transactionCount == 0)
+ {
+ cout << "No transactions available.\n";
+ }
+ else
+ {
+ for(int i = 0; i < transactionCount; i++)
+ {
+ cout << i + 1 << ". "
+ << transactions[i] << endl;
+ }
+ }
+ }
+};
+int Wallet::nextWalletID = 1001;
+int main()
+{
+ Wallet w;
+ int choice;
+ do
+ {
+ cout << "\n===== DIGITAL WALLET =====\n";
+ cout << "1. Add Money\n";
+ cout << "2. Transfer Funds\n";
+ cout << "3. Pay Bills\n";
+ cout << "4. Display Wallet Details\n";
+ cout << "5. Display Transaction History\n";
+ cout << "6. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ w.addMoney();
+ break;
+ case 2:
+ w.transferFunds();
+ break;
+ case 3:
+ w.payBill();
+ break;
+ case 4:
+ w.displayWallet();
+ break;
+ case 5:
+ w.displayTransactions();
+ break;
+ case 6:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 6);
+ return 0;
+}
+```
+
+# UNIT 2
+
+Q1. Design a university management system where person is base class, student and faculty are derived class, display complete information of both using inherited member function
+
+Code:
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+class Person
+{
+protected:
+ string name;
+ int age;
+public:
+ void getPersonInfo()
+ {
+ cout << "Enter Name: ";
+ cin >> name;
+ cout << "Enter Age: ";
+ cin >> age;
+ }
+ void displayPersonInfo()
+ {
+ cout << "Name: " << name << endl;
+ cout << "Age: " << age << endl;
+ }
+};
+class Student : public Person
+{
+private:
+ int rollNo;
+ string course;
+public:
+ void input()
+ {
+ getPersonInfo();
+ cout << "Enter Roll No: ";
+ cin >> rollNo;
+ cout << "Enter Course: ";
+ cin >> course;
+ }
+ void display()
+ {
+ cout << "\n----- STUDENT INFORMATION -----\n";
+ displayPersonInfo();
+ cout << "Roll No: " << rollNo << endl;
+ cout << "Course: " << course << endl;
+ }
+};
+class Faculty : public Person
+{
+private:
+ int employeeID;
+ string department;
+public:
+ void input()
+ {
+ getPersonInfo();
+ cout << "Enter Employee ID: ";
+ cin >> employeeID;
+ cout << "Enter Department: ";
+ cin >> department;
+ }
+ void display()
+ {
+ cout << "\n----- FACULTY INFORMATION -----\n";
+ displayPersonInfo();
+ cout << "Employee ID: " << employeeID << endl;
+ cout << "Department: " << department << endl;
+ }
+};
+int main()
+{
+ Student s;
+ Faculty f;
+ int choice;
+ do
+ {
+ cout << "\n===== UNIVERSITY MANAGEMENT SYSTEM =====\n";
+ cout << "1. Enter Student Information\n";
+ cout << "2. Display Student Information\n";
+ cout << "3. Enter Faculty Information\n";
+ cout << "4. Display Faculty Information\n";
+ cout << "5. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ s.input();
+ break;
+ case 2:
+ s.display();
+ break;
+ case 3:
+ f.input();
+ break;
+ case 4:
+ f.display();
+ break;
+ case 5:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 5);
+ return 0;
+}
+```
+
+Q2. Create a student record system where an array of pointer stores dynamically allocated student objects display all record using pointer transversal
+
+Code:
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+class Student
+{
+private:
+ int rollNo;
+ string name;
+ float marks;
+public:
+ void input()
+ {
+ cout << "Enter Roll No: ";
+ cin >> rollNo;
+ cout << "Enter Name: ";
+ cin >> name;
+ cout << "Enter Marks: ";
+ cin >> marks;
+ }
+ void display()
+ {
+ cout << "\nRoll No: " << rollNo;
+ cout << "\nName: " << name;
+ cout << "\nMarks: " << marks << endl;
+ }
+};
+int main()
+{
+ Student *students[10];
+ int n;
+ int choice;
+ cout << "Enter number of students: ";
+ cin >> n;
+ do
+ {
+ cout << "\n===== STUDENT RECORD SYSTEM =====\n";
+ cout << "1. Enter Student Records\n";
+ cout << "2. Display All Records\n";
+ cout << "3. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ for(int i = 0; i < n; i++)
+ {
+ students[i] = new Student;
+ cout << "\nEnter details of Student "
+ << i + 1 << endl;
+ students[i]->input();
+ }
+ cout << "\nRecords stored successfully.\n";
+ break;
+ case 2:
+ cout << "\n===== ALL STUDENT RECORDS =====\n";
+ for(int i = 0; i < n; i++)
+ {
+ students[i]->display();
+ }
+ break;
+ case 3:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 3);
+ return 0;
+}
+```
+
+Q3. design a sport tournament management system using multiple inherited where a player inherits both sport & personal information resolves ambiguity if duplicate member exists
+
+Code:
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+class Personal
+{
+protected:
+ string name;
+ int age;
+public:
+ void inputPersonal()
+ {
+ cout << "Enter Name: ";
+ cin >> name;
+ cout << "Enter Age: ";
+ cin >> age;
+ }
+ void display()
+ {
+ cout << "\nPersonal Information" << endl;
+ cout << "Name: " << name << endl;
+ cout << "Age: " << age << endl;
+ }
+};
+class Sport
+{
+protected:
+ string sportName;
+ int ranking;
+public:
+ void inputSport()
+ {
+ cout << "Enter Sport Name: ";
+ cin >> sportName;
+ cout << "Enter Ranking: ";
+ cin >> ranking;
+ }
+ void display()
+ {
+ cout << "\nSport Information" << endl;
+ cout << "Sport: " << sportName << endl;
+ cout << "Ranking: " << ranking << endl;
+ }
+};
+class Player : public Personal, public Sport
+{
+private:
+ int playerID;
+public:
+ void input()
+ {
+ cout << "Enter Player ID: ";
+ cin >> playerID;
+ inputPersonal();
+ inputSport();
+ }
+ void displayPlayer()
+ {
+ cout << "\n===== PLAYER INFORMATION =====\n";
+ cout << "Player ID: " << playerID << endl;
+ Personal::display();
+ Sport::display();
+ }
+};
+int main()
+{
+ Player p;
+ int choice;
+ do
+ {
+ cout << "\n===== SPORTS TOURNAMENT SYSTEM =====\n";
+ cout << "1. Enter Player Details\n";
+ cout << "2. Display Player Details\n";
+ cout << "3. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ p.input();
+ break;
+ case 2:
+ p.displayPlayer();
+ break;
+ case 3:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 3);
+ return 0;
+}
+```
+
+Q4. Implement a shape drawing system where a pointer to the base class points to derived class objects and invokes overridden function to display area calculation
+
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Shape
+{
+public:
+ virtual void area()
+ {
+ cout << "Area of shape" << endl;
+ }
+};
+class Circle : public Shape
+{
+private:
+ float radius;
+public:
+ void input()
+ {
+ cout << "Enter radius: ";
+ cin >> radius;
+ }
+ void area()
+ {
+ cout << "Area of Circle = "
+ << 3.14 * radius * radius << endl;
+ }
+};
+class Rectangle : public Shape
+{
+private:
+ float length;
+ float width;
+public:
+ void input()
+ {
+ cout << "Enter length: ";
+ cin >> length;
+ cout << "Enter width: ";
+ cin >> width;
+ }
+ void area()
+ {
+ cout << "Area of Rectangle = "
+ << length * width << endl;
+ }
+};
+int main()
+{
+ Shape *ptr;
+ Circle c;
+ Rectangle r;
+ int choice;
+ do
+ {
+ cout << "\n===== SHAPE DRAWING SYSTEM =====\n";
+ cout << "1. Circle\n";
+ cout << "2. Rectangle\n";
+ cout << "3. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ c.input();
+ ptr = &c;
+ ptr->area();
+ break;
+ case 2:
+ r.input();
+ ptr = &r;
+ ptr->area();
+ break;
+ case 3:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 3);
+ return 0;
+}
+```
+
+# UNIT 3
+
+Q1. Develop a scientific calculator that demonstrate function overloading by implementing multiple functions to perform addition , subtraction, multiplication & division for different data types(int, float, double)
+
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Calculator
+{
+public:
+ int add(int a, int b)
+ {
+ return a + b;
+ }
+ float add(float a, float b)
+ {
+ return a + b;
+ }
+ double add(double a, double b)
+ {
+ return a + b;
+ }
+ int subtract(int a, int b)
+ {
+ return a - b;
+ }
+ float subtract(float a, float b)
+ {
+ return a - b;
+ }
+ double subtract(double a, double b)
+ {
+ return a - b;
+ }
+ int multiply(int a, int b)
+ {
+ return a * b;
+ }
+ float multiply(float a, float b)
+ {
+ return a * b;
+ }
+ double multiply(double a, double b)
+ {
+ return a * b;
+ }
+ int divide(int a, int b)
+ {
+ return a / b;
+ }
+ float divide(float a, float b)
+ {
+ return a / b;
+ }
+ double divide(double a, double b)
+ {
+ return a / b;
+ }
+};
+int main()
+{
+ Calculator c;
+ int choice;
+ int type;
+ do
+ {
+ cout << "\n===== SCIENTIFIC CALCULATOR =====\n";
+ cout << "1. Addition\n";
+ cout << "2. Subtraction\n";
+ cout << "3. Multiplication\n";
+ cout << "4. Division\n";
+ cout << "5. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ if(choice >= 1 && choice <= 4)
+ {
+ cout << "\nSelect Data Type:\n";
+ cout << "1. Integer\n";
+ cout << "2. Float\n";
+ cout << "3. Double\n";
+ cout << "Enter data type: ";
+ cin >> type;
+ if(type == 1)
+ {
+ int a, b;
+ cout << "Enter two integers: ";
+ cin >> a >> b;
+ switch(choice)
+ {
+ case 1:
+ cout << "Result = " << c.add(a, b);
+ break;
+ case 2:
+ cout << "Result = " << c.subtract(a, b);
+ break;
+ case 3:
+ cout << "Result = " << c.multiply(a, b);
+ break;
+ case 4:
+ if(b != 0)
+ cout << "Result = " << c.divide(a, b);
+ else
+ cout << "Cannot divide by zero.";
+ break;
+ }
+ }
+ else if(type == 2)
+ {
+ float a, b;
+ cout << "Enter two float values: ";
+ cin >> a >> b;
+ switch(choice)
+ {
+ case 1:
+ cout << "Result = " << c.add(a, b);
+ break;
+ case 2:
+ cout << "Result = " << c.subtract(a, b);
+ break;
+ case 3:
+ cout << "Result = " << c.multiply(a, b);
+ break;
+ case 4:
+ if(b != 0)
+ cout << "Result = " << c.divide(a, b);
+ else
+ cout << "Cannot divide by zero.";
+ break;
+ }
+ }
+ else if(type == 3)
+ {
+ double a, b;
+ cout << "Enter two double values: ";
+ cin >> a >> b;
+ switch(choice)
+ {
+ case 1:
+ cout << "Result = " << c.add(a, b);
+ break;
+ case 2:
+ cout << "Result = " << c.subtract(a, b);
+ break;
+ case 3:
+ cout << "Result = " << c.multiply(a, b);
+ break;
+ case 4:
+ if(b != 0)
+ cout << "Result = " << c.divide(a, b);
+ else
+ cout << "Cannot divide by zero.";
+ break;
+ }
+ }
+ else
+ {
+ cout << "Invalid data type.";
+ }
+ }
+ else if(choice == 5)
+ {
+ cout << "Program ended.\n";
+ }
+ else
+ {
+ cout << "Invalid choice.\n";
+ }
+ } while(choice != 5);
+ return 0;
+}
+```
+
+Q2. Design a smart home appliance control system where a base + pointer control derived class such as fan, light & AC using virtual function
+
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Appliance
+{
+public:
+ virtual void control()
+ {
+ cout << "Controlling appliance." << endl;
+ }
+};
+class Fan : public Appliance
+{
+public:
+ void control()
+ {
+ cout << "Fan is turned ON." << endl;
+ }
+};
+class Light : public Appliance
+{
+public:
+ void control()
+ {
+ cout << "Light is turned ON." << endl;
+ }
+};
+class AC : public Appliance
+{
+public:
+ void control()
+ {
+ cout << "AC is turned ON." << endl;
+ }
+};
+int main()
+{
+ Appliance *ptr;
+ Fan f;
+ Light l;
+ AC a;
+ int choice;
+ do
+ {
+ cout << "\n===== SMART HOME APPLIANCE SYSTEM =====\n";
+ cout << "1. Control Fan\n";
+ cout << "2. Control Light\n";
+ cout << "3. Control AC\n";
+ cout << "4. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ ptr = &f;
+ ptr->control();
+ break;
+ case 2:
+ ptr = &l;
+ ptr->control();
+ break;
+ case 3:
+ ptr = &a;
+ ptr->control();
+ break;
+ case 4:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 4);
+ return 0;
+}
+```
+
+Q3. Develop a fraction arithmetic system by overloading arithmetic operation to simplify & perform operations on fraction
+
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Fraction
+{
+private:
+ int numerator;
+ int denominator;
+ int gcd(int a, int b)
+ {
+ while(b != 0)
+ {
+ int temp = b;
+ b = a % b;
+ a = temp;
+ }
+ return a;
+ }
+public:
+ void input()
+ {
+ cout << "Enter numerator: ";
+ cin >> numerator;
+ cout << "Enter denominator: ";
+ cin >> denominator;
+ if(denominator == 0)
+ {
+ cout << "Denominator cannot be zero.\n";
+ denominator = 1;
+ }
+ }
+ void simplify()
+ {
+ int g = gcd(numerator, denominator);
+ numerator = numerator / g;
+ denominator = denominator / g;
+ if(denominator < 0)
+ {
+ numerator = -numerator;
+ denominator = -denominator;
+ }
+ }
+ Fraction operator+(Fraction f)
+ {
+ Fraction result;
+ result.numerator =
+ numerator * f.denominator +
+ f.numerator * denominator;
+ result.denominator =
+ denominator * f.denominator;
+ result.simplify();
+ return result;
+ }
+ Fraction operator-(Fraction f)
+ {
+ Fraction result;
+ result.numerator =
+ numerator * f.denominator -
+ f.numerator * denominator;
+ result.denominator =
+ denominator * f.denominator;
+ result.simplify();
+ return result;
+ }
+ Fraction operator*(Fraction f)
+ {
+ Fraction result;
+ result.numerator =
+ numerator * f.numerator;
+ result.denominator =
+ denominator * f.denominator;
+ result.simplify();
+ return result;
+ }
+ Fraction operator/(Fraction f)
+ {
+ Fraction result;
+ result.numerator =
+ numerator * f.denominator;
+ result.denominator =
+ denominator * f.numerator;
+ result.simplify();
+ return result;
+ }
+ void display()
+ {
+ cout << numerator << "/" << denominator << endl;
+ }
+};
+int main()
+{
+ Fraction f1, f2, result;
+ int choice;
+ do
+ {
+ cout << "\n===== FRACTION ARITHMETIC SYSTEM =====\n";
+ cout << "1. Enter First Fraction\n";
+ cout << "2. Enter Second Fraction\n";
+ cout << "3. Add Fractions\n";
+ cout << "4. Subtract Fractions\n";
+ cout << "5. Multiply Fractions\n";
+ cout << "6. Divide Fractions\n";
+ cout << "7. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ f1.input();
+ break;
+ case 2:
+ f2.input();
+ break;
+ case 3:
+ result = f1 + f2;
+ cout << "Result = ";
+ result.display();
+ break;
+ case 4:
+ result = f1 - f2;
+ cout << "Result = ";
+ result.display();
+ break;
+ case 5:
+ result = f1 * f2;
+ cout << "Result = ";
+ result.display();
+ break;
+ case 6:
+ result = f1 / f2;
+ cout << "Result = ";
+ result.display();
+ break;
+ case 7:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 7);
+ return 0;
+}
+```
+
+Q4. Develop a hospital billing system using runtime polymorphism where the billing process is implemented differently for out patients , inpatients & emergency patients through overridden virtual functions
+
+Code:
+
+```cpp
+#include <iostream>
+using namespace std;
+class Fraction
+{
+private:
+ int numerator;
+ int denominator;
+ int gcd(int a, int b)
+ {
+ while(b != 0)
+ {
+ int temp = b;
+ b = a % b;
+ a = temp;
+ }
+ return a;
+ }
+public:
+ void input()
+ {
+ cout << "Enter numerator: ";
+ cin >> numerator;
+ cout << "Enter denominator: ";
+ cin >> denominator;
+ if(denominator == 0)
+ {
+ cout << "Denominator cannot be zero.\n";
+ denominator = 1;
+ }
+ }
+ void simplify()
+ {
+ int g = gcd(numerator, denominator);
+ numerator = numerator / g;
+ denominator = denominator / g;
+ if(denominator < 0)
+ {
+ numerator = -numerator;
+ denominator = -denominator;
+ }
+ }
+ Fraction operator+(Fraction f)
+ {
+ Fraction result;
+ result.numerator =
+ numerator * f.denominator +
+ f.numerator * denominator;
+ result.denominator =
+ denominator * f.denominator;
+ result.simplify();
+ return result;
+ }
+ Fraction operator-(Fraction f)
+ {
+ Fraction result;
+ result.numerator =
+ numerator * f.denominator -
+ f.numerator * denominator;
+ result.denominator =
+ denominator * f.denominator;
+ result.simplify();
+ return result;
+ }
+ Fraction operator*(Fraction f)
+ {
+ Fraction result;
+ result.numerator =
+ numerator * f.numerator;
+ result.denominator =
+ denominator * f.denominator;
+ result.simplify();
+ return result;
+ }
+ Fraction operator/(Fraction f)
+ {
+ Fraction result;
+ result.numerator =
+ numerator * f.denominator;
+ result.denominator =
+ denominator * f.numerator;
+ result.simplify();
+ return result;
+ }
+ void display()
+ {
+ cout << numerator << "/" << denominator << endl;
+ }
+};
+int main()
+{
+ Fraction f1, f2, result;
+ int choice;
+ do
+ {
+ cout << "\n===== FRACTION ARITHMETIC SYSTEM =====\n";
+ cout << "1. Enter First Fraction\n";
+ cout << "2. Enter Second Fraction\n";
+ cout << "3. Add Fractions\n";
+ cout << "4. Subtract Fractions\n";
+ cout << "5. Multiply Fractions\n";
+ cout << "6. Divide Fractions\n";
+ cout << "7. Exit\n";
+ cout << "Enter your choice: ";
+ cin >> choice;
+ switch(choice)
+ {
+ case 1:
+ f1.input();
+ break;
+ case 2:
+ f2.input();
+ break;
+ case 3:
+ result = f1 + f2;
+ cout << "Result = ";
+ result.display();
+ break;
+ case 4:
+ result = f1 - f2;
+ cout << "Result = ";
+ result.display();
+ break;
+ case 5:
+ result = f1 * f2;
+ cout << "Result = ";
+ result.display();
+ break;
+ case 6:
+ result = f1 / f2;
+ cout << "Result = ";
+ result.display();
+ break;
+ case 7:
+ cout << "Program ended.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while(choice != 7);
+ return 0;
+}
+```
+     
