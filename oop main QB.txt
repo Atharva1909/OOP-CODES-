@@ -1,0 +1,983 @@
+Absolutely. I checked this **new 60-question PDF**. It is organized as Unit I (1–20), Unit II (21–40), and Unit III (41–60).   
+
+Below are the **coding/program questions from all three units**, with **shorter, simpler, executable C++ programs**. I have not created programs for purely theoretical/analysis questions.
+
+# UNIT I
+
+## Q6. Student Class – Total, Percentage and Grade
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Student {
+    int marks[5], total;
+    float percent;
+
+public:
+    void input() {
+        for(int i=0;i<5;i++) cin >> marks[i];
+    }
+
+    void calculate() {
+        total=0;
+        for(int i=0;i<5;i++) total+=marks[i];
+        percent=total/5.0;
+    }
+
+    void display() {
+        char grade;
+        if(percent>=90) grade='A';
+        else if(percent>=75) grade='B';
+        else if(percent>=60) grade='C';
+        else if(percent>=50) grade='D';
+        else grade='F';
+
+        cout<<"Total = "<<total<<"\n";
+        cout<<"Percentage = "<<percent<<"\n";
+        cout<<"Grade = "<<grade;
+    }
+};
+
+int main() {
+    Student s;
+    s.input();
+    s.calculate();
+    s.display();
+}
+```
+
+## Q7. Bank Account Management System
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Bank {
+    float balance;
+
+public:
+    Bank() { balance=0; }
+
+    void deposit(float x) {
+        balance += x;
+    }
+
+    void withdraw(float x) {
+        if(x<=balance) balance-=x;
+        else cout<<"Insufficient balance\n";
+    }
+
+    void display() {
+        cout<<"Balance = "<<balance;
+    }
+};
+
+int main() {
+    Bank b;
+    b.deposit(5000);
+    b.withdraw(1500);
+    b.display();
+}
+```
+
+## Q8. Default, Parameterized and Copy Constructor
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Employee {
+    int id;
+
+public:
+    Employee() {
+        id=0;
+        cout<<"Default constructor\n";
+    }
+
+    Employee(int x) {
+        id=x;
+        cout<<"Parameterized constructor\n";
+    }
+
+    Employee(const Employee &e) {
+        id=e.id;
+        cout<<"Copy constructor\n";
+    }
+
+    void show() {
+        cout<<"ID = "<<id<<"\n";
+    }
+};
+
+int main() {
+    Employee e1;
+    Employee e2(101);
+    Employee e3(e2);
+
+    e1.show();
+    e2.show();
+    e3.show();
+}
+```
+
+## Q9. Structure and Enumeration
+
+```cpp
+#include <iostream>
+using namespace std;
+
+enum Department { IT, HR, SALES };
+
+struct Employee {
+    int id;
+    string name;
+    Department dept;
+};
+
+int main() {
+    Employee e={101,"Atharva",IT};
+
+    cout<<"ID: "<<e.id<<"\n";
+    cout<<"Name: "<<e.name<<"\n";
+
+    if(e.dept==IT) cout<<"Department: IT";
+    else if(e.dept==HR) cout<<"Department: HR";
+    else cout<<"Department: SALES";
+}
+```
+
+## Q10. Auto Keyword
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    auto a=10;
+    auto b=10.5;
+    auto c='A';
+
+    cout<<a<<"\n";
+    cout<<b<<"\n";
+    cout<<c;
+}
+```
+
+`auto` allows the compiler to determine the type from the assigned value.
+
+## Q11. Employee Payroll System
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Employee {
+    float basic,gross,net;
+
+public:
+    Employee(float b) {
+        basic=b;
+    }
+
+    void calculate() {
+        float hra=0.20*basic;
+        float da=0.10*basic;
+        gross=basic+hra+da;
+        net=gross-0.05*gross;
+    }
+
+    void show() {
+        cout<<"Gross = "<<gross<<"\n";
+        cout<<"Net = "<<net;
+    }
+};
+
+int main() {
+    Employee e(30000);
+    e.calculate();
+    e.show();
+}
+```
+
+## Q12. Array of Objects – Books
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Book {
+    string name;
+    float price;
+
+public:
+    void input() {
+        cin>>name>>price;
+    }
+
+    void show(float low,float high) {
+        if(price>=low && price<=high)
+            cout<<name<<" "<<price<<"\n";
+    }
+};
+
+int main() {
+    Book b[5];
+
+    for(int i=0;i<5;i++)
+        b[i].input();
+
+    float low,high;
+    cin>>low>>high;
+
+    for(int i=0;i<5;i++)
+        b[i].show(low,high);
+}
+```
+
+## Q17. Static Data Member and Static Member Function
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Test {
+    static int count;
+
+public:
+    Test() {
+        count++;
+    }
+
+    static void show() {
+        cout<<"Objects = "<<count;
+    }
+};
+
+int Test::count=0;
+
+int main() {
+    Test a,b,c;
+    Test::show();
+}
+```
+
+## Q18. Friend Function
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Box {
+    int x;
+
+public:
+    Box(int a) {
+        x=a;
+    }
+
+    friend void show(Box);
+};
+
+void show(Box b) {
+    cout<<"Private value = "<<b.x;
+}
+
+int main() {
+    Box b(10);
+    show(b);
+}
+```
+
+---
+
+# UNIT II
+
+The programming questions in Unit II are Q26–Q32. The source explicitly asks for multilevel inheritance, hierarchical inheritance, multiple inheritance, virtual base class, friend class, nested class, and dynamic memory with pointers. 
+
+## Q26. Multilevel Inheritance – Person → Employee → Manager
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Person {
+protected:
+    string name;
+public:
+    void inputPerson() {
+        cin>>name;
+    }
+};
+
+class Employee : public Person {
+protected:
+    int id;
+public:
+    void inputEmployee() {
+        cin>>id;
+    }
+};
+
+class Manager : public Employee {
+    float salary;
+public:
+    void input() {
+        inputPerson();
+        inputEmployee();
+        cin>>salary;
+    }
+
+    void show() {
+        cout<<name<<" "<<id<<" "<<salary;
+    }
+};
+
+int main() {
+    Manager m;
+    m.input();
+    m.show();
+}
+```
+
+## Q27. Hierarchical Inheritance – Vehicle, Car, Bike, Bus
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Vehicle {
+protected:
+    string brand;
+public:
+    void input() {
+        cin>>brand;
+    }
+};
+
+class Car : public Vehicle {
+public:
+    void show() {
+        cout<<"Car: "<<brand;
+    }
+};
+
+class Bike : public Vehicle {
+public:
+    void show() {
+        cout<<"Bike: "<<brand;
+    }
+};
+
+class Bus : public Vehicle {
+public:
+    void show() {
+        cout<<"Bus: "<<brand;
+    }
+};
+
+int main() {
+    Car c;
+    Bike b;
+    Bus x;
+
+    c.input();
+    c.show();
+}
+```
+
+## Q28. Multiple Inheritance – Academic + Personal
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Personal {
+protected:
+    string name;
+public:
+    void input() {
+        cin>>name;
+    }
+    void show() {
+        cout<<"Name: "<<name<<"\n";
+    }
+};
+
+class Academic {
+protected:
+    int marks;
+public:
+    void input() {
+        cin>>marks;
+    }
+    void show() {
+        cout<<"Marks: "<<marks<<"\n";
+    }
+};
+
+class Student : public Personal, public Academic {
+public:
+    void inputStudent() {
+        Personal::input();
+        Academic::input();
+    }
+
+    void showStudent() {
+        Personal::show();
+        Academic::show();
+    }
+};
+
+int main() {
+    Student s;
+    s.inputStudent();
+    s.showStudent();
+}
+```
+
+The ambiguity is resolved here by explicitly using `Personal::show()` and `Academic::show()`.
+
+## Q29. Virtual Base Class – Diamond Problem
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class University {
+protected:
+    string name;
+public:
+    void input() {
+        cin>>name;
+    }
+};
+
+class Student : virtual public University {};
+class Teacher : virtual public University {};
+
+class TA : public Student, public Teacher {
+public:
+    void show() {
+        cout<<"University: "<<name;
+    }
+};
+
+int main() {
+    TA t;
+    t.input();
+    t.show();
+}
+```
+
+## Q30. Friend Class – Teacher Accessing Student
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Student {
+    string name;
+    int marks;
+
+public:
+    void input() {
+        cin>>name>>marks;
+    }
+
+    friend class Teacher;
+};
+
+class Teacher {
+public:
+    void report(Student s) {
+        cout<<"Name: "<<s.name<<"\n";
+        cout<<"Marks: "<<s.marks<<"\n";
+
+        if(s.marks>=40) cout<<"Pass";
+        else cout<<"Fail";
+    }
+};
+
+int main() {
+    Student s;
+    Teacher t;
+
+    s.input();
+    t.report(s);
+}
+```
+
+## Q31. Nested Class – Employee Address
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Employee {
+    string name;
+
+    class Address {
+        string city;
+    public:
+        Address(string c) {
+            city=c;
+        }
+        void show() {
+            cout<<"City: "<<city;
+        }
+    };
+
+public:
+    Employee(string n,string c) {
+        name=n;
+        Address a(c);
+        cout<<"Name: "<<name<<"\n";
+        a.show();
+    }
+};
+
+int main() {
+    Employee e("Atharva","Pune");
+}
+```
+
+## Q32. Pointers, `new` and `delete`
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Student {
+public:
+    int marks;
+
+    void show() {
+        cout<<"Marks = "<<marks;
+    }
+};
+
+int main() {
+    Student *p=new Student;
+
+    p->marks=90;
+    p->show();
+
+    delete p;
+}
+```
+
+---
+
+# UNIT III
+
+The coding questions in Unit III are Q46–Q52, plus Q57 and Q60. These cover operator overloading, function overloading, type conversion, `explicit`, `mutable`, virtual functions, abstract classes and a complete runtime-polymorphism design.  
+
+## Q46. Complex Number Arithmetic using Operator Overloading
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Complex {
+    int r,i;
+
+public:
+    Complex(int a=0,int b=0) {
+        r=a;
+        i=b;
+    }
+
+    Complex operator+(Complex c) {
+        return Complex(r+c.r,i+c.i);
+    }
+
+    Complex operator-(Complex c) {
+        return Complex(r-c.r,i-c.i);
+    }
+
+    Complex operator*(Complex c) {
+        return Complex(r*c.r-i*c.i,r*c.i+i*c.r);
+    }
+
+    Complex operator/(Complex c) {
+        int d=c.r*c.r+c.i*c.i;
+        return Complex((r*c.r+i*c.i)/d,
+                       (i*c.r-r*c.i)/d);
+    }
+
+    void show() {
+        cout<<r<<" + "<<i<<"i\n";
+    }
+};
+
+int main() {
+    Complex a(8,4),b(2,2);
+
+    (a+b).show();
+    (a-b).show();
+    (a*b).show();
+    (a/b).show();
+}
+```
+
+## Q47. Prefix and Postfix Increment
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Number {
+    int x;
+
+public:
+    Number(int a) {
+        x=a;
+    }
+
+    Number operator++() {
+        ++x;
+        return *this;
+    }
+
+    Number operator++(int) {
+        Number temp=*this;
+        x++;
+        return temp;
+    }
+
+    void show() {
+        cout<<x<<"\n";
+    }
+};
+
+int main() {
+    Number n(5);
+
+    (++n).show();
+    (n++).show();
+    n.show();
+}
+```
+
+## Q48. Function Overloading – Areas
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Area {
+public:
+    int calculate(int side) {
+        return side*side;
+    }
+
+    int calculate(int l,int b) {
+        return l*b;
+    }
+
+    double calculate(double r) {
+        return 3.14*r*r;
+    }
+};
+
+int main() {
+    Area a;
+
+    cout<<"Square = "<<a.calculate(5)<<"\n";
+    cout<<"Rectangle = "<<a.calculate(5,4)<<"\n";
+    cout<<"Circle = "<<a.calculate(3.0);
+}
+```
+
+## Q49. Implicit and Explicit Conversion Between User-Defined Classes
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Meter;
+
+class Feet {
+    float f;
+
+public:
+    Feet(float x) {
+        f=x;
+    }
+
+    float get() {
+        return f;
+    }
+
+    operator Meter();
+};
+
+class Meter {
+    float m;
+
+public:
+    Meter(float x=0) {
+        m=x;
+    }
+
+    void show() {
+        cout<<m<<" meters";
+    }
+
+    operator Feet() {
+        return Feet(m*3.28084);
+    }
+};
+
+Feet::operator Meter() {
+    return Meter(f*0.3048);
+}
+
+int main() {
+    Feet f(10);
+
+    Meter m=f;       // implicit
+    m.show();
+
+    Feet x=Meter(5); // explicit assignment style conversion
+    cout<<"\n"<<x.get()<<" feet";
+}
+```
+
+## Q50. `explicit` Keyword
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Number {
+    int x;
+
+public:
+    explicit Number(int a) {
+        x=a;
+    }
+
+    void show() {
+        cout<<x;
+    }
+};
+
+int main() {
+    Number n(10);
+    n.show();
+}
+```
+
+The purpose is to prevent unwanted implicit conversion such as:
+
+```cpp
+// Number n = 10;   // not allowed
+```
+
+## Q51. `mutable` with Constant Object
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Test {
+    int x;
+    mutable int count;
+
+public:
+    Test(int a) {
+        x=a;
+        count=0;
+    }
+
+    void show() const {
+        count++;
+        cout<<"x = "<<x<<"\n";
+        cout<<"count = "<<count;
+    }
+};
+
+int main() {
+    const Test t(10);
+    t.show();
+}
+```
+
+`mutable` allows `count` to change even inside a `const` member function / constant object.
+
+## Q52. Shape Management using Virtual Functions
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Shape {
+public:
+    virtual void area() {
+        cout<<"Shape\n";
+    }
+};
+
+class Circle : public Shape {
+    float r;
+public:
+    Circle(float x) {
+        r=x;
+    }
+    void area() override {
+        cout<<"Circle = "<<3.14*r*r<<"\n";
+    }
+};
+
+class Rectangle : public Shape {
+    float l,b;
+public:
+    Rectangle(float x,float y) {
+        l=x;
+        b=y;
+    }
+    void area() override {
+        cout<<"Rectangle = "<<l*b<<"\n";
+    }
+};
+
+class Triangle : public Shape {
+    float b,h;
+public:
+    Triangle(float x,float y) {
+        b=x;
+        h=y;
+    }
+    void area() override {
+        cout<<"Triangle = "<<0.5*b*h<<"\n";
+    }
+};
+
+int main() {
+    Circle c(3);
+    Rectangle r(4,5);
+    Triangle t(6,4);
+
+    Shape *p;
+
+    p=&c;
+    p->area();
+
+    p=&r;
+    p->area();
+
+    p=&t;
+    p->area();
+}
+```
+
+## Q57. Pure Virtual Function and Abstract Class
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Shape {
+public:
+    virtual void area()=0;
+};
+
+class Circle : public Shape {
+    float r;
+public:
+    Circle(float x) {
+        r=x;
+    }
+
+    void area() override {
+        cout<<"Circle = "<<3.14*r*r<<"\n";
+    }
+};
+
+class Rectangle : public Shape {
+    float l,b;
+public:
+    Rectangle(float x,float y) {
+        l=x;
+        b=y;
+    }
+
+    void area() override {
+        cout<<"Rectangle = "<<l*b;
+    }
+};
+
+int main() {
+    Circle c(3);
+    Rectangle r(4,5);
+
+    Shape *p=&c;
+    p->area();
+
+    p=&r;
+    p->area();
+}
+```
+
+Here:
+
+```cpp
+virtual void area()=0;
+```
+
+makes `Shape` an **abstract class**.
+
+## Q60. Complete Runtime Polymorphism Design
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Shape {
+public:
+    virtual void area()=0;
+    virtual ~Shape() {}
+};
+
+class Circle : public Shape {
+    float r;
+
+public:
+    Circle(float x) {
+        r=x;
+    }
+
+    void area() override {
+        cout<<"Circle = "<<3.14*r*r<<"\n";
+    }
+};
+
+class Rectangle : public Shape {
+    float l,b;
+
+public:
+    Rectangle(float x,float y) {
+        l=x;
+        b=y;
+    }
+
+    void area() override {
+        cout<<"Rectangle = "<<l*b<<"\n";
+    }
+};
+
+int main() {
+    Shape *p;
+
+    p=new Circle(3);
+    p->area();
+    delete p;
+
+    p=new Rectangle(4,5);
+    p->area();
+    delete p;
+}
+```
